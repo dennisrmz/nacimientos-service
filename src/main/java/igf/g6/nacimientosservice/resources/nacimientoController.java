@@ -23,7 +23,7 @@ public class nacimientoController {
         nacimientoService.addNacimiento(nacimiento);
     }
 
-    @RequestMapping("/nacimientos/{dui}")
+    @RequestMapping("/persona/{dui}")
     public Persona findByDui(@PathVariable String dui){
         return nacimientoService.findByDui(dui);
     }
