@@ -3,10 +3,7 @@ package igf.g6.nacimientosservice.resources;
 
 import igf.g6.nacimientosservice.models.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +21,10 @@ public class nacimientoController {
     @RequestMapping(method = RequestMethod.POST, value = "/nacimientos")
     public void addNacimiento(@RequestBody Persona nacimiento){
         nacimientoService.addNacimiento(nacimiento);
+    }
+
+    @RequestMapping("/nacimientos/{dui}")
+    public Persona findByDui(@PathVariable String dui){
+        return nacimientoService.findByDui(dui);
     }
 }

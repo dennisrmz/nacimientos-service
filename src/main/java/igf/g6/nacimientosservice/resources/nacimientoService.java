@@ -21,4 +21,8 @@ public class nacimientoService {
     public void addNacimiento(Persona nacimiento) {
         nacimientoRepository.save(nacimiento);
     }
+
+    public Persona findByDui(String dui){
+        return nacimientoRepository.findByDui(dui);
+    }
 }
