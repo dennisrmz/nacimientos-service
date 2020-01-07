@@ -25,6 +25,21 @@ public class nacimientoService {
         return nacimientoRepository.findById(id).get();
     }
 
+    //Mostrando Un Nacimiento Especifico por Primer Nombre
+    public List<Persona> getNacimientoNombre(String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido) {
+        List<Persona> nacimientos = new ArrayList<>();
+        nacimientoRepository.findAll().forEach(nacimientos::add);
+        List<Persona> personaEncontrada = new ArrayList<>();
+
+        for (int i = 0; i < nacimientos.size() ; i++) {
+            if (primer_nombre.equals(nacimientos.get(i).getPrimer_nombre()) && segundo_nombre.equals(nacimientos.get(i).getSegundo_nombre() )
+                    && primer_apellido.equals(nacimientos.get(i).getPrimer_apellido()) && segundo_apellido.equals(nacimientos.get(i).getSegundo_apellido()) ) {
+                personaEncontrada.add(nacimientos.get(i));
+            }
+        }
+        return personaEncontrada;
+    }
+
     //Agregando Un Nacimiento
     public void addNacimiento(Persona nacimiento) {
         nacimientoRepository.save(nacimiento);

@@ -26,6 +26,13 @@ public class nacimientoController {
         return nacimientoService.getNacimiento(id);
     }
 
+    //Ruta y Metodo Para Obtener Un Nacimientos por primer nombre
+    @RequestMapping("/nacimientos/buscarNombres/{primer_nombre}/{segundo_nombre}/{primer_apellido}/{segundo_apellido}")
+    public List<Persona> getNacimientoNombre(@PathVariable String primer_nombre,@PathVariable String segundo_nombre,
+                                          @PathVariable String primer_apellido, @PathVariable String segundo_apellido){
+         return nacimientoService.getNacimientoNombre(primer_nombre, segundo_nombre, primer_apellido, segundo_apellido);
+    }
+
     //Ruta y Metodo Para Obtener Agregar un Nacimientos
     @RequestMapping(method = RequestMethod.POST, value = "/nacimientos")
     public void addNacimiento(@RequestBody Persona nacimiento){
