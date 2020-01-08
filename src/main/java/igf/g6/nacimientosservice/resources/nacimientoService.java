@@ -56,4 +56,7 @@ public class nacimientoService {
     topicRepository.delete(id);
     }
      */
+    public Persona findByDui(String dui){
+        return nacimientoRepository.findByDui(dui);
+    }
 }

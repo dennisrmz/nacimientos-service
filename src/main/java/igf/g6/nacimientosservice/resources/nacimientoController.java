@@ -39,6 +39,7 @@ public class nacimientoController {
         nacimientoService.addNacimiento(nacimiento);
     }
 
+
     //Ruta y Metodo Para Actualizar Un Nacimientos
     @RequestMapping(method = RequestMethod.PUT, value = "/nacimientos/{id}")
     public void updateNacimiento(@RequestBody Persona nacimiento, @PathVariable Long id){
@@ -55,4 +56,8 @@ public class nacimientoController {
     }
     */
 
+    @RequestMapping("/persona/{dui}")
+    public Persona findByDui(@PathVariable String dui){
+        return nacimientoService.findByDui(dui);
+    }
 }
