@@ -1,88 +1,62 @@
-package igf.g6.matrimoniosservice.resources;
-import igf.g6.matrimoniosservice.models.matrimonio;
+package igf.g6.nacimientosservice.resources;
+
+import igf.g6.nacimientosservice.interfaces.nacimientoRepository;
+import igf.g6.nacimientosservice.models.Persona;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Service
-public class matrimonioService {
+public class nacimientoService {
     @Autowired
-    private igf.g6.matrimoniosservice.interfaces.matrimonioRepository matrimonioRepository;
+    private nacimientoRepository nacimientoRepository;
 
-    public List<matrimonio> getAllMatrimonios(){
-        List<matrimonio> matrimonios = new ArrayList<>();
-        matrimonioRepository.findAll().forEach(matrimonios::add);
-        return matrimonios;
+    //Mostrando Todos Los Nacimientos
+    public List<Persona> getAllNacimientos(){
+        List<Persona> nacimientos = new ArrayList<>();
+        nacimientoRepository.findAll().forEach(nacimientos::add);
+        return nacimientos;
     }
 
-    public matrimonio getMatrimonio(String id){
-        return matrimonioRepository.findById(Long.parseLong(id)).orElse(null);
+    //Mostrando Un Nacimiento Especifico
+    public Persona getNacimiento(Long id) {
+        return nacimientoRepository.findById(id).get();
     }
 
-    public void addMatrimonio(matrimonio matrimonio) {
-        matrimonioRepository.save(matrimonio);
-    }
+    //Mostrando Un Nacimiento Especifico por Primer Nombre
+    public List<Persona> getNacimientoNombre(String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido) {
+        List<Persona> nacimientos = new ArrayList<>();
+        nacimientoRepository.findAll().forEach(nacimientos::add);
+        List<Persona> personaEncontrada = new ArrayList<>();
 
-    public void updateMatrimonio(matrimonio matrimonio) {
-        matrimonioRepository.save(matrimonio);
-    }
-
-    public void deleteMatrimonio(String id) {
-        matrimonioRepository.deleteById(Long.parseLong(id));
-    }
-
-    public matrimonio getByIdEsposo(String id){
-        return matrimonioRepository.findByIdEsposo(Long.parseLong(id));
-    }
-
-    public matrimonio getByIdEsposa(String id){
-        return matrimonioRepository.findByIdEsposa(Long.parseLong(id));
-    }
-
-    public List<matrimonio> getMatrimonioNombre(String primer_nombre, String segundo_nombre,
-                                                String primer_apellido, String segundo_apellido){
-        List<matrimonio> matrimonios = new ArrayList<>();
-        matrimonioRepository.findAll().forEach(matrimonios::add);
-        List<matrimonio> matrimonioEncontrado = new ArrayList<>();
-
-        for (int i=0; i<matrimonios.size(); i++){
-            if( (primer_nombre.equals(matrimonios.get(i).getNombre1Esposa()) ||
-                    primer_nombre.equals(matrimonios.get(i).getNombre1Esposo()))
-                    && (segundo_nombre.equals(matrimonios.get(i).getNombre2Esposa()) ||
-                    segundo_nombre.equals(matrimonios.get(i).getNombre2Esposo())) &&
-                    (primer_apellido.equals(matrimonios.get(i).getApellido1Esposa()) ||
-                    primer_apellido.equals(matrimonios.get(i).getApellido1Esposo())) &&
-                    (segundo_apellido.equals(matrimonios.get(i).getApellido2Esposa()) ||
-                    segundo_apellido.equals(matrimonios.get(i).getApellido2Esposo()))){
-                matrimonioEncontrado.add(matrimonios.get(i));
+        for (int i = 0; i < nacimientos.size() ; i++) {
+            if (primer_nombre.equals(nacimientos.get(i).getPrimer_nombre()) && segundo_nombre.equals(nacimientos.get(i).getSegundo_nombre() )
+                    && primer_apellido.equals(nacimientos.get(i).getPrimer_apellido()) && segundo_apellido.equals(nacimientos.get(i).getSegundo_apellido()) ) {
+                personaEncontrada.add(nacimientos.get(i));
             }
         }
-        return matrimonioEncontrado;
+        return personaEncontrada;
     }
 
-    public List<matrimonio> getMatrimonioPorEsposos(String nombre1Esposo, String nombre2Esposo,
-                                               String apellido1Esposo, String apellido2Esposo,
-                                               String nombre1Esposa, String nombre2Esposa,
-                                               String apellido1Esposa, String apellido2Esposa){
-        List<matrimonio> matrimonios = new ArrayList<>();
-        matrimonioRepository.findAll().forEach(matrimonios::add);
-        List<matrimonio> matrimoniosEncontrados = new ArrayList<>();
+    //Agregando Un Nacimiento
+    public void addNacimiento(Persona nacimiento) {
+        nacimientoRepository.save(nacimiento);
+    }
 
-        for (int i=0; i<matrimonios.size(); i++){
-            if( (nombre1Esposa.equals(matrimonios.get(i).getNombre1Esposa()) &&
-                    nombre1Esposo.equals(matrimonios.get(i).getNombre1Esposo())
-                    && nombre2Esposa.equals(matrimonios.get(i).getNombre2Esposa()) &&
-                    nombre2Esposo.equals(matrimonios.get(i).getNombre2Esposo()) &&
-                    apellido1Esposa.equals(matrimonios.get(i).getApellido1Esposa()) &&
-                    apellido1Esposo.equals(matrimonios.get(i).getApellido1Esposo()) &&
-                    apellido2Esposa.equals(matrimonios.get(i).getApellido2Esposa()) &&
-                    apellido2Esposo.equals(matrimonios.get(i).getApellido2Esposo())) && matrimonios.get(i).getVigente() == true){
-                matrimoniosEncontrados.add(matrimonios.get(i));
-            }
-        }
-        return matrimoniosEncontrados;
+    //Actualizando un Nacimiento
+    public void updateNacimiento(Long id, Persona nacimiento){
+        nacimientoRepository.save(nacimiento);
+    }
+
+    /*
+    Eliminando Un Nacimiento
+    public void deleteNacimiento(Long id){
+    topicRepository.delete(id);
+    }
+     */
+    public Persona findByDui(String dui){
+        return nacimientoRepository.findByDui(dui);
     }
 }
